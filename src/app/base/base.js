@@ -178,6 +178,7 @@ angular
       var events = queryObject.where({'parent' : filter.trackerId}).exec();
 
       var eventCounts = {};
+      var valuesTotal = 0;
       var tod =  {
         counts : {
           '12am' :  0, '1am' :  0, '2am' :  0, '3am' :  0, '4am' :  0, '5am' :  0, '6am' :  0, '7am' :  0, '8am' :  0, '9am' :  0, '10am' :  0, '11am' :  0,
@@ -191,18 +192,21 @@ angular
       // Loop over events
       for(var i in events) {
         var event = events[i];
+        var value = parseInt(event.value);
         var mtime = moment(event.time);
         var timeSlot = moment(mtime).startOf('day').toDate().getTime();
         var dowSlot = mtime.format('ddd').toLowerCase(); // Day of Week Slot "sun"
         var todSlot = mtime.format('ha').toLowerCase(); // Time of Day Slot "1a"
 
         if(eventCounts.hasOwnProperty(timeSlot)) {
-          eventCounts[timeSlot]++;
+          eventCounts[timeSlot] += value;
         } else {
           eventCounts[timeSlot]=1;
         }
-        dow.counts[dowSlot]++;
-        tod.counts[todSlot]++;
+        dow.counts[dowSlot] += value;
+        tod.counts[todSlot] += value;
+
+        valuesTotal += value;
       } // end looping over events
 
       tod.percents = self.averageKeyValue(tod.counts);
@@ -246,7 +250,9 @@ angular
       var trackerData = {
         last : last,
         first : first,
-        eventCount : events.length,
+        //eventCount : events.length,
+        eventCount : valuesTotal,
+        eventValueSum : valuesTotal,
         eachDay : eachDay,
         timeOfDay : tod,
         dayOfWeek : dow,

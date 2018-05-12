@@ -131,11 +131,11 @@ NomieLabApp
               show: false
           },
           axis: {
-						x: {
-							type: 'timeseries',
-              tick : {
-                format : '%Y-%m-%d'
-              }
+		      x: {
+			     type: 'timeseries',
+                  tick : {
+                    format : '%Y-%m-%d'
+                  }
 						}
 					},
 					zoom: {
@@ -212,7 +212,7 @@ NomieLabApp
 			 * @description Generate C3 Data Format For Charts. It's a little crazy.
 			 */
 			pvt.toChartData = function (events) {
-				//console.log("To Chart Data", events);
+				console.log("To Chart Data", events);
 				var selectedTrackers = pvt.getSelectedTrackerIds();
 				var timeSlots = {};
 
@@ -237,7 +237,9 @@ NomieLabApp
 					var event = events[i];
 					var eventSlot = moment(event.time).format($scope.vm.timeSlotFormat);
 					if (timeSlots.hasOwnProperty(eventSlot)) {
-						timeSlots[eventSlot][event.parent]++;
+                        // Sum the values, not just the # of occurences
+						timeSlots[eventSlot][event.parent] += event.value
+                        //timeSlots[eventSlot][event.parent]++;
 					}
 				}
 
@@ -311,7 +313,7 @@ NomieLabApp
 					self.data = datapack;
 					self.query.events = JsonQuery(datapack.events);
 					self.query.trackers = JsonQuery(datapack.trackers);
-					//console.log("CompareService init() COMPLETE... LETS GO!", self.data);
+					console.log("CompareService init() COMPLETE... LETS GO!", self.data);
 					callback(null, self.data);
 				});
 				return self;

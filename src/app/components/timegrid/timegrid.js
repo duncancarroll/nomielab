@@ -49,7 +49,7 @@ angular.module('chartComponents', [])
       ];
 
       // normalize data
-      //console.log("pvt.$scope.timedata", scope.timedata);
+      console.log("pvt.$scope.timedata", scope.timedata);
       for(var i in scope.timedata) {
         var timerow = scope.timedata[i];
         var thetime = moment(timerow[attrs.timekey]);

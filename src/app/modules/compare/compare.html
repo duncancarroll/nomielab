@@ -128,7 +128,7 @@
 					</li>
 					<li class="list-group-item tracker-item"
               ng-class="{'active' : tracker.selected}"
-              ng-repeat="tracker in vm.trackerArray | orderBy : '-label' | filter : vm.searchTerm" ng-click="vm.toggleTracker(tracker)" ng-show="tracker.label" ng-class="{ 'active' : vm.selectedTracker == tracker }">
+              ng-repeat="tracker in vm.trackerArray | orderBy : '-eventCount' | filter : vm.searchTerm" ng-click="vm.toggleTracker(tracker)" ng-show="tracker.label" ng-class="{ 'active' : vm.selectedTracker == tracker }">
 						<i class="pull-left margin-sm-right nomie-icon nomie-icon-sm {{tracker.icon}}" style="color:{{tracker.color}}"></i>
             <i class="pull-right nomie-icon nomie-icon-md" ng-class="{'ion-toggle-filled text-primary' : tracker.selected, 'ion-toggle text-faded-50' : !tracker.selected }"></i>
             <h4 class="list-group-item-heading text-md text-ellipses">{{tracker.label}}</h4>
@@ -165,7 +165,7 @@
 
 
         <section class="overview statbox statbox-default margin-md padding-off"
-                  ng-repeat="tracker in vm.selectedTrackers | orderBy: '-stats.eventCount'"
+                  ng-repeat="tracker in vm.selectedTrackers | orderBy: '-stats.eventValueSum'"
                   ng-click="vm.trackerStatClick(tracker);"
                   ng-mouseover="vm.trackerStatHover(tracker)"
                   ng-mouseleave="vm.trackerStatBlur()"
@@ -176,7 +176,7 @@
             </div>
             <div class="col-sm-1 col-xs-3 stats padding-sm-top">
               <label class="text-ellipses">Total</label>
-              <div class="value">{{tracker.stats.eventCount | number}}</div>
+              <div class="value">{{tracker.stats.eventValueSum | number}}</div>
             </div>
             <div class="col-sm-1 col-xs-3 stats padding-sm-top">
               <label class="text-ellipses">Avg Day</label>
