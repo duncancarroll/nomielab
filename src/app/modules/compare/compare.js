@@ -215,7 +215,7 @@ NomieLabApp
 				console.log("To Chart Data", events);
 				var selectedTrackers = pvt.getSelectedTrackerIds();
 				var timeSlots = {};
-
+                var MEDITATION_TRACKER = "1445824605207-o00f";
 
 				var mfirst = moment(events[0].time);
 				var mlast = moment(events[events.length - 1].time);
@@ -237,8 +237,12 @@ NomieLabApp
 					var event = events[i];
 					var eventSlot = moment(event.time).format($scope.vm.timeSlotFormat);
 					if (timeSlots.hasOwnProperty(eventSlot)) {
+                        var val = parseInt(event.value);
                         // Sum the values, not just the # of occurences
-						timeSlots[eventSlot][event.parent] += event.value
+                        if (event.parent == MEDITATION_TRACKER) {
+                            val = val / 20;
+                        }
+						timeSlots[eventSlot][event.parent] += val;
                         //timeSlots[eventSlot][event.parent]++;
 					}
 				}
